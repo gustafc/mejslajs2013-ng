@@ -11,7 +11,7 @@
 				<label>Wine</label> <input type="text" ng-model="newWine.name" placeholder="E.g. Clos de Baguette">
 			</div>
 			<div>
-				<label>Vintage</label> <input type="text" pattern="\d{4}|NV" ng-model="newWine.vintage" placeholder="Year or NV">
+				<label>Vintage</label> <input type="text" pattern="\d{4}|NV|nv" ng-model="newWine.vintage" placeholder="Year or NV">
 			</div>
 			<div>
 				<button>Add {{newWine.name}} {{newWine.vintage}} to your cellar!</button>

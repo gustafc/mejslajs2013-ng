@@ -7,7 +7,8 @@
 		{name: "Françoise Bedel Entre Ciel et Terre", vintage: undefined},
 	 ];
 	 $scope.add = function addWine(){
-		 $scope.wines.push($scope.newWine);
-		 $scope.newWine = {};
+		$scope.newWine.vintage = parseInt($scope.newWine.vintage, 10) || undefined;
+		$scope.wines.push($scope.newWine);
+		$scope.newWine = {};
 	 }
  }
