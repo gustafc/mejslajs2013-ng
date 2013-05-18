@@ -2,19 +2,30 @@
 <html ng-app>
 	<head>
 		<meta charset="utf-8">
+		<script src="/cellar.js"></script>
 		<script src="/lib/angular-1.0.6.js"></script>
 	</head>
-	<body>
-		<div>
+	<body ng-controller="CellarCtrl">
+		<form ng-submit="add()">
 			<div>
-				<label>Wine</label> <input type="text" ng-model="wineName" placeholder="E.g. Clos de Baguette">
+				<label>Wine</label> <input type="text" ng-model="newWine.name" placeholder="E.g. Clos de Baguette">
 			</div>
 			<div>
-				<label>Vintage</label> <input type="text" pattern="\d{4}|NV" ng-model="vintage" placeholder="Year or NV">
+				<label>Vintage</label> <input type="text" pattern="\d{4}|NV" ng-model="newWine.vintage" placeholder="Year or NV">
 			</div>
 			<div>
-				<button>Add {{wineName}} {{vintage}} to your cellar!</button>
+				<button>Add {{newWine.name}} {{newWine.vintage}} to your cellar!</button>
 			</div>
-		</div>
+		</form>
+		<hr>
+		<table border=1>
+			<tr>
+				<th>Wine</th><th>Vintage</th>
+			</tr>
+			<tr ng-repeat="wine in wines">
+				<td>{{wine.name}}</td>
+				<td>{{wine.vintage}}</td>
+			</tr>
+		</table>
 	</body>
 </html>
