@@ -20,7 +20,8 @@
 		<hr>
 		<table border=1>
 			<tr>
-				<th>Wine</th><th>Vintage</th>
+				<th ng-click="sort('name')">      Wine    </th>
+				<th ng-click="sort('vintage')">   Vintage </th>
 			</tr>
 			<tr ng-repeat="wine in wines">
 				<td>{{wine.name}}</td>

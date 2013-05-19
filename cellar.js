@@ -8,7 +8,23 @@
 	 ];
 	 $scope.add = function addWine(){
 		$scope.newWine.vintage = parseInt($scope.newWine.vintage, 10) || undefined;
-		$scope.wines.push($scope.newWine);
+		$scope.wines.unshift($scope.newWine);
 		$scope.newWine = {};
-	 }
+	 };
+	var sortDirections = {};
+	$scope.sort = function sortWines(sortField){
+		function coerceAndDefault(coerce, defaultValue) { return function(v){ return coerce(v || defaultValue) } }
+		var str = coerceAndDefault(String, ""), num = coerceAndDefault(Number, 0);
+		function cmpString(a, b){ return str(a).localeCompare(str(b)); }
+		function cmpNum(a, b){
+			var na = num(a), nb = num(b);
+			return na == nb ? 0 : na < nb ? -1 : 1;
+		}
+		var cmpTable = { "name": cmpString, "vintage": cmpNum };
+		var direction = sortDirections[sortField] || 1;
+		sortDirections[sortField] = -direction;
+		$scope.wines.sort(function(a, b){
+			return direction * cmpTable[sortField](a[sortField], b[sortField]);
+		});
+	 };
  }
