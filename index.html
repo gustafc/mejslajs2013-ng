@@ -6,15 +6,15 @@
 		<script src="/lib/angular-1.0.6.js"></script>
 	</head>
 	<body ng-controller="CellarCtrl">
-		<form ng-submit="add()">
+		<form name="newWineForm" ng-submit="add()">
 			<div>
-				<label>Wine</label> <input type="text" ng-model="newWine.name" placeholder="E.g. Clos de Baguette">
+				<label>Wine</label> <input type="text" ng-model="newWine.name" placeholder="E.g. Clos de Baguette" required>
 			</div>
 			<div>
-				<label>Vintage</label> <input type="text" pattern="\d{4}|NV|nv" ng-model="newWine.vintage" placeholder="Year or NV">
+				<label>Vintage</label> <input type="text" pattern="\d{4}|NV|nv" ng-model="newWine.vintage" placeholder="Year or NV" required>
 			</div>
 			<div>
-				<button>Add {{newWine.name}} {{newWine.vintage}} to your cellar!</button>
+				<button ng-disabled="newWineForm.$invalid">Add {{newWine.name}} {{newWine.vintage}} to your cellar!</button>
 			</div>
 		</form>
 		<hr>
