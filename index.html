@@ -2,8 +2,10 @@
 <html ng-app>
 	<head>
 		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" href="/style.css">
 		<script src="/cellar.js"></script>
 		<script src="/lib/angular-1.0.6.js"></script>
+		<title>Vinfest</title>
 	</head>
 	<body ng-controller="CellarCtrl">
 		<form name="newWineForm" ng-submit="add()">
@@ -18,15 +20,28 @@
 			</div>
 		</form>
 		<hr>
-		<table border=1>
-			<tr>
-				<th ng-click="sort('name')">      Wine    </th>
-				<th ng-click="sort('vintage')">   Vintage </th>
-			</tr>
-			<tr ng-repeat="wine in wines">
-				<td>{{wine.name}}</td>
-				<td>{{wine.vintage}}</td>
-			</tr>
+		<table border=1 class=wines>
+			<thead>
+				<tr>
+					<th ng-click="sort('name')" colspan=2> Wine    </th>
+					<th ng-click="sort('vintage')"       > Vintage </th>
+				</tr>
+			</thead>
+			<tbody ng-repeat="wine in wines">
+				<tr>
+					<td>
+						<button ng-click="toggleEdit(wine)">{{editable(wine) && 'Save' || 'Edit'}}</button>
+					</td>
+					<td>
+						<span  ng-show="readonly(wine)">{{wine.name}}</span>
+						<input ng-show="editable(wine)" ng-model="wine.name">
+					</td>
+					<td>
+						<span  ng-show="readonly(wine)">{{wine.vintage}}</span>
+						<input ng-show="editable(wine)" ng-model="wine.vintage" type=number integer>
+					</td>
+				</tr>
+			</tbody>
 		</table>
 	</body>
 </html>

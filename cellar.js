@@ -1,4 +1,5 @@
 ﻿ function CellarCtrl($scope) {
+	var winesInEditMode = [];
 	$scope.newWine = {};
 	$scope.wines = [
 		{name: "Henri Goutorbe Special Club", vintage: 2002},
@@ -27,4 +28,13 @@
 			return direction * cmpTable[sortField](a[sortField], b[sortField]);
 		});
 	 };
+	 $scope.toggleEdit = function toggleEdit(wine) {
+		var index = winesInEditMode.indexOf(wine);
+		if (index == -1) winesInEditMode.push(wine);
+		else winesInEditMode.splice(index, 1);
+	 }; 
+	 $scope.editable = function isEditable(wine) {
+		 return winesInEditMode.indexOf(wine) != -1;
+	 };
+	 $scope.readonly = function isReadonly(wine){ return !$scope.editable(wine) }
  }
