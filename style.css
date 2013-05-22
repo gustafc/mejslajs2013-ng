@@ -2,3 +2,15 @@ td input {
 	min-width: 1em;
 	max-width: 100%; 
 }
+
+span.grape {
+	margin-left: .5em;
+	border: 1px solid #CCC;
+	border-radius: .3em;
+	padding-left: .3em;
+	padding-right: .3em;
+}
+
+span.grape:first-child {
+	margin-left: 0:
+}

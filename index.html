@@ -16,6 +16,9 @@
 				<label>Vintage</label> <input type="text" pattern="\d{4}|NV|nv" ng-model="newWine.vintage" placeholder="Year or NV" required>
 			</div>
 			<div>
+				<label>Grapes</label> <input type="text" ng-model="newWine.grapes" placeholder="E.g. petit verdot, merlot">
+			</div>
+			<div>
 				<button ng-disabled="newWineForm.$invalid">Add {{newWine.name}} {{newWine.vintage}} to your cellar!</button>
 			</div>
 		</form>
@@ -23,8 +26,9 @@
 		<table border=1 class=wines>
 			<thead>
 				<tr>
-					<th ng-click="sort('name')" colspan=2    > Wine    </th>
-					<th ng-click="sort('vintage')" colspan=2 > Vintage </th>
+					<th ng-click="sort('name')" colspan=2  > Wine     </th>
+					<th ng-click="sort('vintage')"         > Vintage  </th>
+					<th ng-click="sort('grapes')" colspan=2> Varietal </th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="wine in wines">
@@ -39,6 +43,9 @@
 					<td>
 						<span  ng-show="readonly(wine)">{{wine.vintage}}</span>
 						<input ng-show="editable(wine)" ng-model="wine.vintage" type=number integer>
+					</td>
+					<td>
+						<span class=grape ng-repeat="grape in wine.grapes">{{grape}}</span>
 					</td>
 					<td>
 						<button ng-click="remove(wine)">-</button>
