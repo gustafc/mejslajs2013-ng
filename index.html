@@ -28,9 +28,9 @@
 				</tr>
 			</thead>
 			<tbody ng-repeat="wine in wines">
-				<tr>
+				<tr ng-form name="{editWine}">
 					<td>
-						<button ng-click="toggleEdit(wine)">{{editable(wine) && 'Save' || 'Edit'}}</button>
+						<button ng-click="toggleEdit(wine)" ng-disabled="editable(wine) && !savable(wine)">{{editable(wine) && 'Save' || 'Edit'}}</button>
 					</td>
 					<td>
 						<span  ng-show="readonly(wine)">{{wine.name}}</span>

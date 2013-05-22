@@ -1,14 +1,14 @@
-﻿ function CellarCtrl($scope) {
+﻿function CellarCtrl($scope) {
 	var winesInEditMode = [];
 	$scope.newWine = {};
 	$scope.wines = [
 		{name: "Henri Goutorbe Special Club", vintage: 2002},
-		{name: "Krug Grand Cuvée", vintage: undefined},
+		{name: "Krug Grand Cuvée", vintage: null},
 		{name: "Recaredo Gran Reserva Brut Nature", vintage: 2006},
-		{name: "Françoise Bedel Entre Ciel et Terre", vintage: undefined},
+		{name: "Françoise Bedel Entre Ciel et Terre", vintage: null},
 	 ];
 	 $scope.add = function addWine(){
-		$scope.newWine.vintage = parseInt($scope.newWine.vintage, 10) || undefined;
+		$scope.newWine.vintage = parseInt($scope.newWine.vintage, 10) || null;
 		$scope.wines.unshift($scope.newWine);
 		$scope.newWine = {};
 	 };
@@ -36,5 +36,8 @@
 	 $scope.editable = function isEditable(wine) {
 		 return winesInEditMode.indexOf(wine) != -1;
 	 };
+	 $scope.savable = function isSavable(wine) {
+		return wine.name.length > 0 && (wine.vintage === null || typeof wine.vintage === "number");
+	 }
 	 $scope.readonly = function isReadonly(wine){ return !$scope.editable(wine) }
  }
