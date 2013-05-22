@@ -9,6 +9,7 @@ span.grape {
 	border-radius: .3em;
 	padding-left: .3em;
 	padding-right: .3em;
+	font-size: 70%;
 }
 
 span.grape:first-child {
