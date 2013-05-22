@@ -1,4 +1,9 @@
 ﻿function CellarCtrl($scope) {
+	function arrayRemove(arr, elem){
+		var index = arr.indexOf(elem);
+		if (index !== -1) arr.splice(index, 1);
+		return index !== -1;
+	}
 	var winesInEditMode = [];
 	$scope.newWine = {};
 	$scope.wines = [
@@ -29,9 +34,7 @@
 		});
 	 };
 	 $scope.toggleEdit = function toggleEdit(wine) {
-		var index = winesInEditMode.indexOf(wine);
-		if (index == -1) winesInEditMode.push(wine);
-		else winesInEditMode.splice(index, 1);
+		if (!arrayRemove(winesInEditMode, wine)) winesInEditMode.push(wine);
 	 }; 
 	 $scope.editable = function isEditable(wine) {
 		 return winesInEditMode.indexOf(wine) != -1;
@@ -40,4 +43,8 @@
 		return wine.name.length > 0 && (wine.vintage === null || typeof wine.vintage === "number");
 	 }
 	 $scope.readonly = function isReadonly(wine){ return !$scope.editable(wine) }
+	 $scope.remove = function removeWine(wine) {
+		arrayRemove($scope.wines, wine);
+		arrayRemove(winesInEditMode, wine);
+	 }
  }

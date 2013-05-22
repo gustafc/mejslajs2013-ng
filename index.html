@@ -23,8 +23,8 @@
 		<table border=1 class=wines>
 			<thead>
 				<tr>
-					<th ng-click="sort('name')" colspan=2> Wine    </th>
-					<th ng-click="sort('vintage')"       > Vintage </th>
+					<th ng-click="sort('name')" colspan=2    > Wine    </th>
+					<th ng-click="sort('vintage')" colspan=2 > Vintage </th>
 				</tr>
 			</thead>
 			<tbody ng-repeat="wine in wines">
@@ -39,6 +39,9 @@
 					<td>
 						<span  ng-show="readonly(wine)">{{wine.vintage}}</span>
 						<input ng-show="editable(wine)" ng-model="wine.vintage" type=number integer>
+					</td>
+					<td>
+						<button ng-click="remove(wine)">-</button>
 					</td>
 				</tr>
 			</tbody>
