@@ -13,10 +13,25 @@
 		{name: "Recaredo Gran Reserva Brut Nature", vintage: 2006, grapes: ["macabeo", "parellada", "xarel·lo"]},
 		{name: "Françoise Bedel Entre Ciel et Terre", vintage: null, grapes: ["pinot meunier"]},
 	 ];
+	 function parseGrapes(commaSeparatedGrapeNames) { 
+		var nicelyCommaSeparated = commaSeparatedGrapeNames.trim().replace(/,(\s*,)+/g, ",").replace(/^,|,$/g, "").trim();
+		return nicelyCommaSeparated.length === 0 ? [] : nicelyCommaSeparated.toLowerCase().split(/\s*,\s*/);
+	}
+	function sanitizeGrapeList(wine) {
+		wine.grapes.sort();
+		// Remove any empty strings sneaking in
+		while(wine.grapes[0] === "") grapes.shift();
+		// Remove any duplicate grape names
+		var i = wine.grapes.length - 1;
+		while (i > 0) { 
+			if (wine.grapes[i] === wine.grapes[i - 1]) wine.grapes.splice(i, 1); 
+			i--;
+		}
+	}
 	 $scope.add = function addWine(){
 		$scope.newWine.vintage = parseInt($scope.newWine.vintage, 10) || null;
-		$scope.newWine.grapes = $scope.newWine.grapes.replace(/\s+/, " ").toLowerCase().split(/\s*,\s*/);
-		$scope.newWine.grapes.sort();
+		$scope.newWine.grapes = parseGrapes($scope.newWine.grapes);
+		sanitizeGrapeList($scope.newWine); 
 		$scope.wines.unshift($scope.newWine);
 		$scope.newWine = {};
 	 };
@@ -36,8 +51,8 @@
 					var cmp = elementCmp(a[i], b[i]);
 					if (cmp != 0) return cmp;
 				}
-				// All elements equal for the length of a. If the arrays are of the same length, they're equal, else 
-				// the shorter is considered smaller.
+				// All elements equal for the length of the least array. If the arrays are of
+				// the same length, they're equal, else the shorter is considered smaller.
 				return cmpNum(a.length, b.length); 
 			};
 		}
@@ -49,7 +64,17 @@
 		});
 	 };
 	 $scope.toggleEdit = function toggleEdit(wine) {
-		if (!arrayRemove(winesInEditMode, wine)) winesInEditMode.push(wine);
+		if (!arrayRemove(winesInEditMode, wine)) {
+			// We're entering edit mode
+			winesInEditMode.push(wine);
+			wine.newGrapes = "";
+			return;
+		}
+		// We're finishing editing; save new dataz
+		var newGrapes = parseGrapes(wine.newGrapes);
+		delete wine.newGrapes;
+		wine.grapes = wine.grapes.concat(newGrapes);
+		sanitizeGrapeList(wine);
 	 }; 
 	 $scope.editable = function isEditable(wine) {
 		 return winesInEditMode.indexOf(wine) != -1;
@@ -61,5 +86,8 @@
 	 $scope.remove = function removeWine(wine) {
 		arrayRemove($scope.wines, wine);
 		arrayRemove(winesInEditMode, wine);
+	 }
+	 $scope.removeGrape = function removeGrape(wine, grape) {
+		 arrayRemove(wine.grapes, grape);
 	 }
  }

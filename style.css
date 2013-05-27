@@ -15,3 +15,8 @@ span.grape {
 span.grape:first-child {
 	margin-left: 0:
 }
+
+span.grape span.remove {
+	cursor: pointer;
+	color: red;
+}

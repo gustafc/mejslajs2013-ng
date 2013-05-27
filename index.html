@@ -45,7 +45,8 @@
 						<input ng-show="editable(wine)" ng-model="wine.vintage" type=number integer>
 					</td>
 					<td>
-						<span class=grape ng-repeat="grape in wine.grapes">{{grape}}</span>
+						<span class=grape ng-repeat="grape in wine.grapes">{{grape}}<span ng-click="removeGrape(wine, grape)" ng-show="editable(wine)" class=remove> &#x232b;</span></span>
+						<input ng-show="editable(wine)" ng-model="wine.newGrapes" placeholder="new, varietals, here">
 					</td>
 					<td>
 						<button ng-click="remove(wine)">-</button>
