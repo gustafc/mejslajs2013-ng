@@ -34,7 +34,8 @@
 			<tbody ng-repeat="wine in wines">
 				<tr ng-form name="{editWine}">
 					<td>
-						<button ng-click="toggleEdit(wine)" ng-disabled="editable(wine) && !savable(wine)">{{editable(wine) && 'Save' || 'Edit'}}</button>
+						<button ng-click="beginEdit(wine)" ng-show="readonly(wine)">Edit</button>
+						<button ng-click="finishEdit(wine)" ng-show="editable(wine)" ng-disable="!savable(wine)">Save</button>
 					</td>
 					<td>
 						<span  ng-show="readonly(wine)">{{wine.name}}</span>
@@ -49,7 +50,8 @@
 						<input ng-show="editable(wine)" ng-model="wine.newGrapes" placeholder="new, varietals, here">
 					</td>
 					<td>
-						<button ng-click="remove(wine)">-</button>
+						<button ng-click="remove(wine)" ng-show="readonly(wine)">-</button>
+						<button ng-click="abortEdit(wine)" ng-show="editable(wine)">&times;</button>
 					</td>
 				</tr>
 			</tbody>

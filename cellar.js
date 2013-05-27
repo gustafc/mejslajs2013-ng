@@ -63,19 +63,24 @@
 			return direction * cmpTable[sortField](a[sortField], b[sortField]);
 		});
 	 };
-	 $scope.toggleEdit = function toggleEdit(wine) {
-		if (!arrayRemove(winesInEditMode, wine)) {
-			// We're entering edit mode
-			winesInEditMode.push(wine);
-			wine.newGrapes = "";
-			return;
-		}
+	 $scope.beginEdit = function beginEdit(wine) {
+		wine.originalState = JSON.parse(JSON.stringify(wine));
+		winesInEditMode.push(wine);
+		wine.newGrapes = "";
+	 }; 
+	 $scope.finishEdit = function finishEdit(wine) {
+		arrayRemove(winesInEditMode, wine);
 		// We're finishing editing; save new dataz
 		var newGrapes = parseGrapes(wine.newGrapes);
 		delete wine.newGrapes;
 		wine.grapes = wine.grapes.concat(newGrapes);
 		sanitizeGrapeList(wine);
+		delete wine.originalState;
 	 }; 
+	 $scope.abortEdit = function abortEdit(wine) {
+		arrayRemove(winesInEditMode, wine);
+		$scope.wines[$scope.wines.indexOf(wine)] = wine.originalState;
+	 };
 	 $scope.editable = function isEditable(wine) {
 		 return winesInEditMode.indexOf(wine) != -1;
 	 };
